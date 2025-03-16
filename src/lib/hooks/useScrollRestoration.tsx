@@ -1,6 +1,6 @@
-import { atom, useAtom } from "jotai";
-import { useCallback, useEffect, useState } from "react";
-import { debounce } from "../utils/debouce.ts";
+import { atom, useAtom } from 'jotai';
+import { useCallback, useEffect, useState } from 'react';
+import { debounce } from '../utils/debounce.ts';
 
 const scrollRestorationAtom = atom<
   Record<string, { scrollTop: number; scrollLeft: number }>
@@ -8,7 +8,7 @@ const scrollRestorationAtom = atom<
 
 interface ScrollRestorationOptions {
   debounceTime?: number;
-  persist?: false | "localStorage" | "sessionStorage";
+  persist?: false | 'localStorage' | 'sessionStorage';
 }
 
 export function useScrollRestoration<U extends HTMLElement>(
@@ -42,9 +42,9 @@ export function useScrollRestoration<U extends HTMLElement>(
       }));
     }, debounceTime);
 
-    element.addEventListener("scroll", handleScroll);
+    element.addEventListener('scroll', handleScroll);
     return () => {
-      element.removeEventListener("scroll", handleScroll);
+      element.removeEventListener('scroll', handleScroll);
     };
   }, [debounceTime, key, element, persist, setScrollRestoration]);
 
@@ -63,7 +63,7 @@ export function useScrollRestoration<U extends HTMLElement>(
         scrollLeft: element.scrollLeft,
       };
 
-      if (persist === "localStorage") {
+      if (persist === 'localStorage') {
         const savedScrollRestoration = localStorage.getItem(
           `scrollRestoration-${key}`
         );
@@ -72,7 +72,7 @@ export function useScrollRestoration<U extends HTMLElement>(
         }
       }
 
-      if (persist === "sessionStorage") {
+      if (persist === 'sessionStorage') {
         const savedScrollRestoration = sessionStorage.getItem(
           `scrollRestoration-${key}`
         );
@@ -99,12 +99,12 @@ export function useScrollRestoration<U extends HTMLElement>(
   useEffect(() => {
     if (!persist || !currentScrollRestoration) return;
 
-    if (persist === "localStorage") {
+    if (persist === 'localStorage') {
       localStorage.setItem(
         `scrollRestoration-${key}`,
         JSON.stringify(currentScrollRestoration)
       );
-    } else if (persist === "sessionStorage") {
+    } else if (persist === 'sessionStorage') {
       sessionStorage.setItem(
         `scrollRestoration-${key}`,
         JSON.stringify(currentScrollRestoration)
